@@ -19,11 +19,11 @@ export default {
   props: {
     modelValue: [String, Number],
     totalPages: Number,
+    itemsOnPage: Number,
   },
   data() {
     return {
       currentPage: 1,
-      itemsOnPage: 10,
     };
   },
   methods: {

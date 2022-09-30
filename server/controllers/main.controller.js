@@ -13,7 +13,7 @@ class MainController {
       rows: paginatedRows,
       rowsCount: data.rowCount,
       currentPage: page,
-      itemsOnPage: limit,
+      itemsOnPage: limit
     };
 
     res.json(resultData);

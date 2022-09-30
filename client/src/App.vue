@@ -1,9 +1,9 @@
 <template>
   <div class="filters-form">
-    <CustomSelect v-model="sortedColumnName" :options="headers" />
+    <CustomSelect v-model="sortedColumnName" :options="tableHeaders" />
     <CustomSelect
       v-model="filterCondition"
-      :options="conditions"
+      :options="filters"
       :class="{
         disable: sortedColumnName === '',
       }"
@@ -11,7 +11,7 @@
     <CustomInput
       v-model="searchQuery"
       :class="{
-        disable: sortedColumnName === '',
+        disable: filterCondition === '',
       }"
     />
   </div>
@@ -21,11 +21,11 @@
         <tr>
           <th style="cursor: default">Дата</th>
           <th
-            v-for="(header, idx) in headers"
+            v-for="(header, idx) in tableHeaders"
             :key="idx"
-            @click="setSortedColumn(header)"
+            @click="setSortedColumn(header.value)"
           >
-            {{ header }}
+            {{ header.name }}
           </th>
         </tr>
       </thead>
@@ -40,7 +40,11 @@
     </table>
   </div>
   <h2 v-else>По такому запросу данных не найдено</h2>
-  <PaginationComponent :totalPages="totalPages" @changePage="changePage" />
+  <PaginationComponent
+    @changePage="changePage"
+    :totalPages="totalPages"
+    :itemsOnPage="10"
+  />
 </template>
 
 <script>
@@ -58,21 +62,21 @@ export default {
   },
   data() {
     return {
-      headers: {
-        title: "Название",
-        amount: "Количество",
-        distance: "Расстояние",
-      },
-      conditions: {
-        contains: "Содержит",
-        equals: "=",
-        more: ">",
-        less: "<",
-      },
+      tableHeaders: [
+        { value: "title", name: "Название" },
+        { value: "amount", name: "Количество" },
+        { value: "distance", name: "Расстояние" },
+      ],
+      filters: [
+        { value: "contains", name: "Содержит" },
+        { value: "equals", name: "=" },
+        { value: "more", name: ">" },
+        { value: "less", name: "<" },
+      ],
       data: [],
       sortDirection: 1,
       sortedColumnName: "",
-      filterCondition: "contains",
+      filterCondition: "",
       searchQuery: "",
       totalPages: 0,
     };
@@ -94,19 +98,14 @@ export default {
         this.totalPages = Math.ceil(response.data.rowsCount / response.data.itemsOnPage);
         this.data = response.data.rows;
       } catch (error) {
-        console.log(error);
+        console.log("Ошибка подгрузки данных с сервера:" + error);
       }
     },
     humanizeDate(date) {
       return moment(date).format("hh:mm:ss, Do MMM YYYY");
     },
-    setSortedColumn(columnName) {
-      this.sortedColumnName = Object.keys(this.headers).find(
-        (key) => this.headers[key] === columnName
-      );
-      this.sortDirection *= -1;
-    },
     sortTableByColumn(columnName, direction) {
+      console.log(columnName, direction);
       switch (columnName) {
         case "title": {
           return direction === 1
@@ -142,16 +141,21 @@ export default {
           break;
       }
     },
+    setSortedColumn(columnName) {
+      this.sortedColumnName = columnName;
+      this.sortDirection *= -1;
+    },
   },
   computed: {
     sortedColumns() {
+      console.log(this.sortedColumnName);
       if (this.sortedColumnName === "") return this.data;
       return this.data.sort(
         this.sortTableByColumn(this.sortedColumnName, this.sortDirection)
       );
     },
     searchQueryResult() {
-      if (this.sortedColumnName === "") return this.data;
+      if (this.filterCondition === "") return this.data;
       return this.sortedColumns.filter(
         this.filterTableByCondition(this.sortedColumnName, this.filterCondition)
       );
