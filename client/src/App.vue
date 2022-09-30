@@ -13,6 +13,7 @@
       :class="{
         disable: filterCondition === '',
       }"
+      placeholder="Поиск по условию..."
     />
   </div>
   <div v-if="searchQueryResult.length > 0">
@@ -39,7 +40,7 @@
       </tbody>
     </table>
   </div>
-  <h2 v-else>По такому запросу данных не найдено</h2>
+  <h2 v-else>По такому запросу данных на текущей странице не найдено</h2>
   <PaginationComponent
     @changePage="changePage"
     :totalPages="totalPages"
