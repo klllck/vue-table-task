@@ -12,6 +12,6 @@ yarn install
 yarn serve
 ```
 
-### Сборка бля продакшена
+### Сборка для продакшена
 ```
 yarn build
