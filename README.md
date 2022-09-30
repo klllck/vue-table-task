@@ -9,9 +9,10 @@ yarn install
 
 ### Компиляция и горячая перезагрузка в режиме разработки
 ```
-yarn serve
+yarn dev
 ```
 
 ### Сборка для продакшена
 ```
-yarn build
+yarn build //клиент
+yarn start //сервер
