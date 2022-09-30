@@ -1,0 +1,16 @@
+const sqlQuery = `
+DROP TABLE IF EXISTS "task_table";
+
+CREATE TABLE IF NOT EXISTS "task_table"(
+  id SERIAL PRIMARY KEY, 
+  date TIMESTAMP DEFAULT NOW(), 
+  title VARCHAR(255) NOT NULL, 
+  amount INTEGER NOT NULL, 
+  distance REAL NOT NULL
+); 
+
+INSERT INTO "task_table" ("date", "title", "amount", "distance")
+VALUES ('Feb 24, 2023 8:11 AM', 'Nationwide', '7', '111.23'), ('Sep 22, 2023 11:57 AM', 'Facebook', '92', '2323.25'), ('Feb 14, 2023 6:53 AM', 'Walmart', '55', '233.02'), ('Nov 2, 2022 1:55 AM', 'Alphabet', '14', '11.032'), ('Sep 27, 2023 1:50 PM', 'General Motors', '41', '2222.23'), ('May 18, 2023 1:57 PM', 'UPS', '66', '1234.12'), ('Sep 19, 2023 9:19 PM', 'Progressive', '89', '4214.345'), ('Nov 14, 2022 8:24 PM', 'Johnson & Johnson', '71', '1.54'), ('Jan 21, 2023 11:40 AM', 'Pfizer', '74', '232.23'), ('Jan 20, 2023 6:29 PM', 'Apple', '2', '222.34'), ('May 18, 2023 5:07 PM', 'JP Morgan Chase', '79', '766.5'), ('Aug 18, 2023 1:44 PM', 'Apple', '18', '76.4578'), ('Sep 3, 2023 7:31 PM', 'Pfizer', '56', '435.78'), ('Jul 12, 2023 12:41 PM', 'Microsoft', '17', '867.48'), ('Apr 6, 2023 4:18 AM', 'Palentir Technologies', '58', '757.57'), ('Mar 18, 2023 9:16 AM', 'Morgan Stanley', '74', '98.67'), ('Jul 8, 2023 12:59 PM', 'Bumble', '37', '456.43'), ('Oct 25, 2022 6:04 AM', 'Target', '21', '757.34'), ('May 17, 2023 1:28 PM', 'Ford Motor', '25', '120.65'), ('Aug 19, 2023 9:57 AM', 'Square', '17', '213.35'), ('Oct 17, 2022 11:30 AM', 'State Farm Insurance', '68', '6.48'), ('Sep 2, 2023 3:50 AM', 'Ford Motor', '16', '356.45'), ('Jul 16, 2023 11:51 PM', 'American Express', '59', '344.76'), ('Mar 18, 2023 4:45 AM', 'Superhuman', '89', '565.45'), ('Dec 25, 2022 6:26 PM', 'United Airlines', '38', '345.46'), ('May 7, 2023 12:11 AM', 'Boeing', '66', '456.78'), ('Apr 4, 2023 8:19 PM', 'GitHub', '71', '5455.3'), ('Dec 23, 2022 4:29 PM', 'HP', '10', '3556'), ('Mar 15, 2023 7:02 PM', 'Uber', '85', '3434.5'), ('Apr 23, 2023 5:48 PM', 'Gamestop', '74', '3234.768'), ('Mar 31, 2023 4:52 PM', 'United Airlines', '40', '67.56'), ('Jun 16, 2023 10:07 PM', 'Chevron', '9', '355.75'), ('Apr 23, 2023 12:50 AM', 'Square', '72', '654.57'), ('Dec 6, 2022 1:43 PM', 'Best Buy', '2', '654.57'), ('Dec 3, 2022 8:42 AM', 'Pfizer', '37', '1111.11'), ('Apr 16, 2023 7:43 AM', 'Pfizer', '37', '233.4'), ('Jan 5, 2023 12:09 AM', 'Slack', '43', '366.3'), ('Nov 11, 2022 11:33 AM', 'UnitedHealth Group', '3', '345.6'), ('Aug 3, 2023 5:05 PM', 'Nationwide', '49', '3434.23'), ('Jul 3, 2023 5:49 PM', 'Johnson & Johnson', '83', '897.76'), ('Sep 29, 2023 2:35 AM', 'Home Depot', '39', '556'), ('Nov 10, 2022 1:14 AM', 'Walt Disney', '19', '999'), ('May 7, 2023 2:33 PM', 'Intel', '13', '456.45'), ('Jan 25, 2023 4:08 PM', 'Uber', '47', '574.34'), ('Feb 26, 2023 5:53 AM', 'Ford Motor', '67', '656.4'), ('Mar 22, 2023 5:15 AM', 'Gamestop', '96', '656'), ('Apr 14, 2023 2:13 AM', 'Walt Disney', '40', '656'), ('Mar 31, 2023 2:12 AM', 'Stripe', '48', '123.456'), ('Jul 25, 2023 7:13 PM', 'Procter & Gamble', '11', '366.3'), ('May 23, 2023 8:18 AM', 'Costco Wholesale', '83', '111.23');
+`;
+
+module.exports = sqlQuery;
