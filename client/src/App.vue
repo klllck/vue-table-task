@@ -74,7 +74,7 @@ export default {
         { value: "more", name: ">" },
         { value: "less", name: "<" },
       ],
-      data: [],
+      tableData: [],
       sortDirection: 1,
       sortedColumnName: "",
       filterCondition: "",
@@ -84,9 +84,7 @@ export default {
   },
   methods: {
     changePage(event) {
-      const page = event["page"];
-      const limit = event["limit"];
-      this.fetchData(page, limit);
+      this.fetchData(event.page, event.limit);
     },
     async fetchData(page, limit) {
       try {
@@ -97,7 +95,7 @@ export default {
           },
         });
         this.totalPages = Math.ceil(response.data.rowsCount / response.data.itemsOnPage);
-        this.data = response.data.rows;
+        this.tableData = response.data.rows;
       } catch (error) {
         console.log("Ошибка подгрузки данных с сервера:" + error);
       }
@@ -106,7 +104,6 @@ export default {
       return moment(date).format("hh:mm:ss, Do MMM YYYY");
     },
     sortTableByColumn(columnName, direction) {
-      console.log(columnName, direction);
       switch (columnName) {
         case "title": {
           return direction === 1
@@ -149,14 +146,13 @@ export default {
   },
   computed: {
     sortedColumns() {
-      console.log(this.sortedColumnName);
-      if (this.sortedColumnName === "") return this.data;
-      return this.data.sort(
+      if (this.sortedColumnName === "") return this.tableData;
+      return this.tableData.sort(
         this.sortTableByColumn(this.sortedColumnName, this.sortDirection)
       );
     },
     searchQueryResult() {
-      if (this.filterCondition === "") return this.data;
+      if (this.filterCondition === "") return this.tableData;
       return this.sortedColumns.filter(
         this.filterTableByCondition(this.sortedColumnName, this.filterCondition)
       );
